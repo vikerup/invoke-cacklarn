@@ -14,7 +14,7 @@ $permission | where {
                    $_.FileSystemRights -like "CreateFiles" -or 
                    $_.FileSystemRights -like "AppendData" -or 
                    $_.FileSystemRights -like "FullControl" -or
-                   $_.FileSystemRights -like "Write" -or
+                   $_.FileSystemRights -like "Modify" -or
                    $_.FileSystemRights -like "Delete"
                    }
 }
