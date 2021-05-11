@@ -11,11 +11,12 @@ foreach($item in $folder){
 $permission = (Get-Acl $item -ErrorAction SilentlyContinue).Access | ?{$_.IdentityReference -eq "BUILTIN\Users"} | Select IdentityReference,FileSystemRights
 $permission | Add-Member -MemberType NoteProperty -name "path" -Value $item -passthru -ErrorAction SilentlyContinue | out-null
 $permission | where {
-                   $_.FileSystemRights -like "CreateFiles" -or 
-                   $_.FileSystemRights -like "AppendData" -or 
-                   $_.FileSystemRights -like "FullControl" -or
-                   $_.FileSystemRights -like "Modify" -or
-                   $_.FileSystemRights -like "Delete"
+                   $_.FileSystemRights -like "*CreateFiles*" -or 
+                   $_.FileSystemRights -like "*AppendData*" -or 
+                   $_.FileSystemRights -like "*FullControl*" -or
+                   $_.FileSystemRights -like "*Modify*" -or
+                   $_.FileSystemRights -like "*Write*" -or
+                   $_.FileSystemRights -like "*Delete*"
                    }
 }
 }
