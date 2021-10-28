@@ -3,8 +3,8 @@ function invoke-cacklarn() {
         [Parameter(Mandatory=$true)][string]$path,
         [switch]$recurse
     )
-[array]$folder = (get-childitem $path -ErrorAction SilentlyContinue).directory.fullname
-[array]$folder += (get-childitem $path -ErrorAction SilentlyContinue -Recurse:$recurse).FullName
+[array]$folder = (get-childitem $path).directory.fullname
+[array]$folder += (get-childitem $path -Recurse:$recurse).FullName
 $folder = $folder | sort -Unique
 
 foreach($item in $folder){
