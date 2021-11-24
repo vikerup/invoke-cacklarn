@@ -7,6 +7,6 @@ invoke-cacklarna is an easy to use script to quickly find modifiable files on wi
 ### Usage
 
 ```
-iex (new-object net.webclient).downloadstring("https://raw.githubusercontent.com/viksecurity/invoke-cacklarn/main/invoke-cacklarn.ps1")
+iex (new-object net.webclient).downloadstring("https://raw.githubusercontent.com/viksafe/invoke-cacklarn/main/invoke-cacklarn.ps1")
 
 ```
