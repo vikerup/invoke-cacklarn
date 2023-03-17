@@ -3,11 +3,13 @@ function invoke-cacklarn() {
         [Parameter(Mandatory=$true)][string]$path,
         [switch]$recurse
     )
+
 [array]$folder = (get-childitem $path).directory | select -expand FullName
 [array]$folder += (get-childitem $path -Recurse:$recurse) | select -expand FullName
 $folder = $folder | sort -Unique
 
 foreach($item in $folder){
+try{
 $permission = (Get-Acl $item -ErrorAction SilentlyContinue).Access | ?{$_.IdentityReference -in "$env:USERDOMAIN\$env:USERNAME","$env:USERDOMAIN\Domain Users","BUILTIN\Users","Everyone","NT AUTHORITY\Authenticated Users"} | Select IdentityReference,FileSystemRights,RegistryRights
 $permission | Add-Member -MemberType NoteProperty -name path -Value $($item | Split-Path -NoQualifier) -passthru -ErrorAction SilentlyContinue | out-null
 $permission | where {
@@ -25,5 +27,9 @@ $permission | where {
                    $_.RegistryRights -like "*Write*" -or
                    $_.RegistryRights -like "*Delete*"
                    }
+    }
+catch{
+# error, probably no read access
+    }
 }
 }
