@@ -8,7 +8,7 @@ function invoke-cacklarn() {
 $folder = $folder | sort -Unique
 
 foreach($item in $folder){
-$permission = (Get-Acl $item -ErrorAction SilentlyContinue).Access | ?{$_.IdentityReference -in "$env:USERDOMAIN\$env:USERNAME",$env:USERDOMAIN\Domain Users","BUILTIN\Users","Everyone","NT AUTHORITY\Authenticated Users"} | Select IdentityReference,FileSystemRights,RegistryRights
+$permission = (Get-Acl $item -ErrorAction SilentlyContinue).Access | ?{$_.IdentityReference -in "$env:USERDOMAIN\$env:USERNAME","$env:USERDOMAIN\Domain Users","BUILTIN\Users","Everyone","NT AUTHORITY\Authenticated Users"} | Select IdentityReference,FileSystemRights,RegistryRights
 $permission | Add-Member -MemberType NoteProperty -name path -Value $($item | Split-Path -NoQualifier) -passthru -ErrorAction SilentlyContinue | out-null
 $permission | where {
                    $_.FileSystemRights -like "*CreateFiles*" -or 
